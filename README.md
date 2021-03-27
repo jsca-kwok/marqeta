@@ -14,11 +14,19 @@ gem 'marqeta'
 
 And then execute:
 
+```sh
     $ bundle install
+    # Bundle complete! 9 Gemfile dependencies, 38 gems now installed.
+    # Use `bundle info [gemname]` to see where a bundled gem is installed
+```
 
 Or install it yourself as:
 
+```sh
     $ gem install marqeta
+    # Fetching via_cep-*.gem
+    # 1 gem installed
+```
 
 ## Usage
 
@@ -32,5 +40,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/marqeta.
-
+Bug reports and pull requests are welcome on GitHub at <https://github.com/marcelobarreto/marqeta>.
