@@ -41,6 +41,15 @@ module Marqeta
 
         requester(uri: uri, request: Net::HTTP::Get.new(uri))
       end
+
+      def post(endpoint:, params: {})
+      end
+
+      def put(endpoint:, params: {})
+      end
+
+      def delete(endpoint:)
+      end
     end
   end
 end
