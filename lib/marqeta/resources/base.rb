@@ -91,7 +91,7 @@ module Marqeta
       protected
 
       def define_attributes(response)
-        self.class.class_type.schema.each_key do |field|
+        self.class.class_type.schema.each do |field|
           singleton_class.send(:attr_accessor, field.name)
           value = response[field.name.to_s] || response[field.name] || (field.respond_to?(:value) && field.value)
           instance_variable_set("@#{field.name}", value)
