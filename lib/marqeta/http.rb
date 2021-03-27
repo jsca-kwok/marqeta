@@ -2,15 +2,26 @@
 
 module Marqeta
   module HTTP
+    class BadRequestError < StandardError; end
+    class ServerError < StandardError; end
+    class ResponseParsingError < StandardError; end
+
     class << self
       def basic_auth
-        [Configuration.config.username, Configuration.config.password]
+        [Configuration.config.username, Configuration.config.password].freeze
       end
 
       def handle_response(response)
-        JSON.parse(response.body)
+        case response.code.to_i
+        when 200, 201
+          JSON.parse(response.body)
+        when 400
+          raise BadRequestError
+        when 500
+          raise ServerError
+        end
       rescue JSON::ParserError => e
-        { 'error' => e.message }
+        raise ResponseParsingError
       end
 
       def get(endpoint:, query: {})
