@@ -16,6 +16,7 @@ module Marqeta
         when 200, 201
           JSON.parse(response.body)
         when 400
+          # Add message from server
           raise BadRequestError
         when 500
           raise ServerError
@@ -24,11 +25,7 @@ module Marqeta
         raise ResponseParsingError
       end
 
-      def get(endpoint:, query: {})
-        uri = URI(Configuration.config.base_url + endpoint)
-        uri.query = URI.encode_www_form(query)
-
-        request = Net::HTTP::Get.new(uri)
+      def requester(uri:, request:)
         request.basic_auth(*basic_auth)
 
         response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
@@ -36,6 +33,13 @@ module Marqeta
         end
 
         handle_response(response)
+      end
+
+      def get(endpoint:, query: {})
+        uri = URI(Configuration.config.base_url + endpoint)
+        uri.query = URI.encode_www_form(query)
+
+        requester(uri: uri, request: Net::HTTP::Get.new(uri))
       end
     end
   end
