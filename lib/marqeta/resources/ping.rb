@@ -6,7 +6,7 @@ module Marqeta
   module Resources
     class Ping < Base
       set_path '/ping'
-      set_fields %i(success version revision timestamp env id)
+      set_fields %i[success version revision timestamp env id]
     end
   end
 end

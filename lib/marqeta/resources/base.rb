@@ -18,23 +18,22 @@ module Marqeta
         end
 
         def all
-          response = HTTP.get(endpoint: self.path, query: { count: config.default_pagination })
+          response = HTTP.get(endpoint: path, query: { count: config.default_pagination })
 
           if has_collection
-            response["data"].map {|data| new(data) }
+            response['data'].map { |data| new(data) }
           else
             new(response)
           end
         end
 
         def find(token)
-          response = HTTP.get(endpoint: self.path + "/#{token}")
+          response = HTTP.get(endpoint: path + "/#{token}")
 
           new(response)
         end
 
-        def create
-        end
+        def create; end
 
         protected
 
@@ -46,7 +45,7 @@ module Marqeta
         end
       end
 
-      attr_reader *self.fields
+      attr_reader(*fields)
 
       def initialize(response)
         self.class.fields.each do |field|
