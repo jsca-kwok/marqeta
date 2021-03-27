@@ -1,6 +1,9 @@
-require "marqeta/version"
+# frozen_string_literal: true
+
+require 'marqeta/version'
+require 'dry-struct'
+require 'dry-types'
 
 module Marqeta
-  class Error < StandardError; end
-  # Your code goes here...
+  autoload :Configuration, 'marqeta/configuration'
 end
