@@ -8,6 +8,8 @@ module Marqeta
 
     class ResponseParsingError < StandardError; end
 
+    APPLICATION_JSON_CONTENT_TYPE = 'application/json'
+
     class << self
       def basic_auth
         [Configuration.config.username, Configuration.config.password].freeze
@@ -48,7 +50,7 @@ module Marqeta
         uri = URI(Configuration.config.base_url + endpoint)
         request = Net::HTTP::Post.new(uri)
         request.body = params.to_json
-        request.content_type = 'application/json'
+        request.content_type = APPLICATION_JSON_CONTENT_TYPE
 
         requester(uri: uri, request: request)
       end
@@ -57,7 +59,7 @@ module Marqeta
         uri = URI(Configuration.config.base_url + endpoint)
         request = Net::HTTP::Put.new(uri)
         request.body = params.to_json
-        request.content_type = 'application/json'
+        request.content_type = APPLICATION_JSON_CONTENT_TYPE
 
         requester(uri: uri, request: request)
       end
@@ -65,7 +67,7 @@ module Marqeta
       def delete(endpoint:)
         uri = URI(Configuration.config.base_url + endpoint)
         request = Net::HTTP::Delete.new(uri)
-        request.content_type = 'application/json'
+        request.content_type = APPLICATION_JSON_CONTENT_TYPE
 
         requester(uri: uri, request: request)
       end
