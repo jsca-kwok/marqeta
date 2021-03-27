@@ -24,7 +24,7 @@ Or install it yourself as:
 
 ```sh
     $ gem install marqeta
-    # Fetching via_cep-*.gem
+    # Fetching marqeta-*.gem
     # 1 gem installed
 ```
 
