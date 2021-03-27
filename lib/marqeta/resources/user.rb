@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'marqeta/resources/base'
+require 'marqeta/validators/user_validator'
 
 module Marqeta
   module Resources
@@ -15,6 +16,7 @@ module Marqeta
         id_card_number id_card_expiration_date nationality company postal_code
         parent_token uses_parent_account
       ]
+      set_validator Validators::UserValidator
     end
   end
 end

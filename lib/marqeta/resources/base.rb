@@ -6,11 +6,13 @@ module Marqeta
   module Resources
     class Base
       extend Dry::Configurable
+      Types = Dry::Types()
 
       setting(:path)
       setting(:fields, [])
       setting(:default_pagination, 1_000_000)
       setting(:has_collection, false)
+      setting(:validator)
 
       class << self
         Base.settings.each do |setting_name|
@@ -45,12 +47,43 @@ module Marqeta
         end
       end
 
-      attr_reader(*fields)
+      attr_reader :errors
 
-      def initialize(response)
+      def initialize(response = {})
+        @errors = {}
         self.class.fields.each do |field|
-          instance_variable_set("@#{field}", response[field.to_s])
+          singleton_class.send(:attr_accessor, field)
+          instance_variable_set("@#{field}", response[field.to_s] || response[field])
         end
+      end
+
+      def to_h
+        hash = {}
+
+        self.class.config.fields.each do |field|
+          hash[field] = instance_variable_get("@#{field.to_s}")
+        end
+
+        hash
+      end
+
+      def valid?
+        validator = self.class.config.validator
+
+        if validator
+          schema = validator.new.call(self.to_h)
+          set_errors(schema.errors.to_h)
+          return false if @errors.any?
+        end
+
+        set_errors({})
+        return true
+      end
+
+      protected
+
+      def set_errors(errors = {})
+        @errors = errors
       end
     end
   end

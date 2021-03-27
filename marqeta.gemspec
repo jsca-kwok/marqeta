@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'dry-configurable', '>= 0.12.1'
   spec.add_dependency 'dry-struct', '>= 1.4.0'
   spec.add_dependency 'dry-types', '>= 1.5.1'
+  spec.add_dependency 'dry-validation', '>= 1.6.0'
 
   spec.add_development_dependency 'dotenv', '~> 2.7.6'
   spec.add_development_dependency 'pry', '>= 0.14.0'

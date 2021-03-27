@@ -1,0 +1,4 @@
+en:
+  marqeta:
+    errors:
+      taken: 'is already taken'
