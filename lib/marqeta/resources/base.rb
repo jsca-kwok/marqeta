@@ -1,22 +1,22 @@
 # frozen_string_literal: true
 
-require 'pry'
-
 module Marqeta
   module Resources
     class Base
       extend Dry::Configurable
-      Types = Dry::Types()
 
       setting(:path)
-      setting(:fields, [])
       setting(:default_pagination, 1_000_000)
       setting(:has_collection, false)
-      setting(:validator)
+      setting(:type)
 
       class << self
         Base.settings.each do |setting_name|
           define_method(setting_name) { config.send(setting_name) }
+        end
+
+        def class_type
+          self.config.type
         end
 
         def all
@@ -30,9 +30,7 @@ module Marqeta
         end
 
         def find(token)
-          response = HTTP.get(endpoint: path + "/#{token}")
-
-          new(response)
+          new(HTTP.get(endpoint: path + "/#{token}"))
         end
 
         def create; end
@@ -47,43 +45,29 @@ module Marqeta
         end
       end
 
-      attr_reader :errors
-
       def initialize(response = {})
-        @errors = {}
-        self.class.fields.each do |field|
-          singleton_class.send(:attr_accessor, field)
-          instance_variable_set("@#{field}", response[field.to_s] || response[field])
+        self.class.class_type.schema.keys.each do |field|
+          singleton_class.send(:attr_accessor, field.name)
+          value = response[field.name.to_s] || response[field.name] || (field.respond_to?(:value) && field.value)
+          instance_variable_set("@#{field.name.to_s}", value)
         end
       end
 
       def to_h
         hash = {}
 
-        self.class.config.fields.each do |field|
+        self.class.class_type.schema.keys.each do |field|
           hash[field] = instance_variable_get("@#{field.to_s}")
         end
 
         hash
       end
+      alias_method :to_hash, :to_h
 
       def valid?
-        validator = self.class.config.validator
-
-        if validator
-          schema = validator.new.call(self.to_h)
-          set_errors(schema.errors.to_h)
-          return false if @errors.any?
-        end
-
-        set_errors({})
+        validator = self.class.class_type
+        validator.new(self.to_h)
         return true
-      end
-
-      protected
-
-      def set_errors(errors = {})
-        @errors = errors
       end
     end
   end

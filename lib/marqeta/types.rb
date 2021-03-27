@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 module Marqeta
-  module Validators
+  module Types
   end
 end

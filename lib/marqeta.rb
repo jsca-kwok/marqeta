@@ -15,5 +15,5 @@ module Marqeta
   autoload :Configuration, 'marqeta/configuration'
   autoload :HTTP, 'marqeta/http'
   autoload :Resources, 'marqeta/resources'
-  autoload :Validators, 'marqeta/validators'
+  autoload :Types, 'marqeta/types'
 end

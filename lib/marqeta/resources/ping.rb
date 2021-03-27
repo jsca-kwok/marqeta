@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 require 'marqeta/resources/base'
+require 'marqeta/types/ping_type'
 
 module Marqeta
   module Resources
     class Ping < Base
       set_path '/ping'
-      set_fields %i[success version revision timestamp env id]
+      set_type Marqeta::Types::PingType
     end
   end
 end
