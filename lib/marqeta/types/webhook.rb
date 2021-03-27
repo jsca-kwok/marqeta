@@ -5,7 +5,7 @@ require 'marqeta/types/shared_types'
 
 module Marqeta
   module Types
-    class WebhookConfigType < BaseType
+    class WebhookConfig < BaseType
       attribute :url, String.constrained(format: %r{^https://})
       attribute :basic_auth_username, String.constrained(max_size: 50)
       attribute :basic_auth_password, SharedTypes::SafePassword
@@ -13,7 +13,7 @@ module Marqeta
       attribute :custom_header, Hash.default({}.freeze)
     end
 
-    class WebhookType < BaseType
+    class Webhook < BaseType
       attribute :token, String
       attribute :name, String
       attribute :active, Bool

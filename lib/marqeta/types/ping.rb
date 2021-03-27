@@ -4,7 +4,7 @@ require 'marqeta/types/base_type'
 
 module Marqeta
   module Types
-    class PingType < BaseType
+    class Ping < BaseType
       attribute :id, String
       attribute :env, String
       attribute :version, String

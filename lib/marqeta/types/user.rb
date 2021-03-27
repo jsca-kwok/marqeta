@@ -5,7 +5,7 @@ require 'marqeta/types/shared_types'
 
 module Marqeta
   module Types
-    class UserType < BaseType
+    class User < BaseType
       attribute :token, String.default('')
       attribute :active, Bool.default(true)
       attribute :notes, String.default('')
