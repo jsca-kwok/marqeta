@@ -3,7 +3,9 @@
 module Marqeta
   module HTTP
     class BadRequestError < StandardError; end
+
     class ServerError < StandardError; end
+
     class ResponseParsingError < StandardError; end
 
     class << self
@@ -21,7 +23,7 @@ module Marqeta
         when 500
           raise ServerError
         end
-      rescue JSON::ParserError => e
+      rescue JSON::ParserError
         raise ResponseParsingError
       end
 
@@ -43,12 +45,29 @@ module Marqeta
       end
 
       def post(endpoint:, params: {})
+        uri = URI(Configuration.config.base_url + endpoint)
+        request = Net::HTTP::Post.new(uri)
+        request.body = params.to_json
+        request.content_type = 'application/json'
+
+        requester(uri: uri, request: request)
       end
 
       def put(endpoint:, params: {})
+        uri = URI(Configuration.config.base_url + endpoint)
+        request = Net::HTTP::Put.new(uri)
+        request.body = params.to_json
+        request.content_type = 'application/json'
+
+        requester(uri: uri, request: request)
       end
 
       def delete(endpoint:)
+        uri = URI(Configuration.config.base_url + endpoint)
+        request = Net::HTTP::Delete.new(uri)
+        request.content_type = 'application/json'
+
+        requester(uri: uri, request: request)
       end
     end
   end

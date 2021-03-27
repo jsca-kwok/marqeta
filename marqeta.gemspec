@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Ruby API client for Marqeta'
   spec.homepage      = 'https://github.com/marcelobarreto/marqeta'
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.4')
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.5')
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = spec.homepage
@@ -23,10 +23,8 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'dotenv', '~> 2.7.6'
   spec.add_development_dependency 'pry', '>= 0.14.0'
-  spec.add_development_dependency 'simplecov', '~> 0.21.2'
   spec.add_development_dependency 'rake', '>= 13.0'
   spec.add_development_dependency 'rspec', '>= 3.10'
   spec.add_development_dependency 'rubocop', '>= 1.12.0'
-  spec.add_development_dependency 'rubocop-rake', '~> 0.5.1'
-  spec.add_development_dependency 'rubocop-rspec', '~> 2.2.0'
+  spec.add_development_dependency 'simplecov', '~> 0.21.2'
 end

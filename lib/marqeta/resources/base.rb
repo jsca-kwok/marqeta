@@ -16,7 +16,7 @@ module Marqeta
         end
 
         def class_type
-          self.config.type
+          config.type
         end
 
         def all
@@ -33,7 +33,11 @@ module Marqeta
           new(HTTP.get(endpoint: path + "/#{token}"))
         end
 
-        def create; end
+        def create(attributes = {})
+          response = HTTP.post(endpoint: path, params: attributes)
+
+          new(response)
+        end
 
         protected
 
@@ -45,29 +49,53 @@ module Marqeta
         end
       end
 
-      def initialize(response = {})
-        self.class.class_type.schema.keys.each do |field|
-          singleton_class.send(:attr_accessor, field.name)
-          value = response[field.name.to_s] || response[field.name] || (field.respond_to?(:value) && field.value)
-          instance_variable_set("@#{field.name.to_s}", value)
+      def update(attributes = {})
+        response = HTTP.put(endpoint: "#{self.class.path}/#{token}", params: to_h.merge(attributes))
+
+        response.each do |key, value|
+          send("#{key}=", value)
+        rescue NoMethodError
+          instance_variable_set("@#{key}", value)
         end
+
+        self
+      end
+
+      def destroy
+        HTTP.delete(endpoint: "#{self.class.path}/#{token}")
+        true
+      end
+
+      def initialize(response)
+        response ||= {}
+        define_attributes(response)
       end
 
       def to_h
         hash = {}
 
-        self.class.class_type.schema.keys.each do |field|
-          hash[field] = instance_variable_get("@#{field.to_s}")
+        self.class.class_type.schema.each_key do |field|
+          hash[field.name] = instance_variable_get("@#{field.name}")
         end
 
         hash
       end
-      alias_method :to_hash, :to_h
+      alias to_hash to_h
 
       def valid?
         validator = self.class.class_type
-        validator.new(self.to_h)
-        return true
+        validator.new(to_h)
+        true
+      end
+
+      protected
+
+      def define_attributes(response)
+        self.class.class_type.schema.each_key do |field|
+          singleton_class.send(:attr_accessor, field.name)
+          value = response[field.name.to_s] || response[field.name] || (field.respond_to?(:value) && field.value)
+          instance_variable_set("@#{field.name}", value)
+        end
       end
     end
   end
