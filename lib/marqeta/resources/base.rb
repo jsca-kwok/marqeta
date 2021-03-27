@@ -49,6 +49,8 @@ module Marqeta
         end
       end
 
+      attr_reader :errors
+
       def update(attributes = {})
         response = HTTP.put(endpoint: "#{self.class.path}/#{token}", params: to_h.merge(attributes))
 
@@ -83,12 +85,30 @@ module Marqeta
       alias to_hash to_h
 
       def valid?
+        clean_errors
         validator = self.class.class_type
-        validator.new(to_h)
+        validator.schema.each do |field|
+          value = send(field.name)
+          field[value]
+        rescue => ex
+          add_error(field.name, ex.message)
+        end
+
+        return false if errors.any?
+
         true
       end
 
       protected
+
+      def add_error(key, message)
+        @errors ||= {}
+        @errors[key] = message
+      end
+
+      def clean_errors
+        @errors = {}
+      end
 
       def define_attributes(response)
         self.class.class_type.schema.each do |field|
