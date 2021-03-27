@@ -20,10 +20,9 @@ module Marqeta
         when 200, 201
           JSON.parse(response.body)
         when 400
-          # Add message from server
-          raise BadRequestError
+          raise BadRequestError.new(response.body)
         when 500
-          raise ServerError
+          raise ServerError.new(response.body)
         end
       rescue JSON::ParserError
         raise ResponseParsingError

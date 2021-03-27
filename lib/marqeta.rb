@@ -10,6 +10,7 @@ require 'dry-validation'
 
 require 'marqeta/resources/ping'
 require 'marqeta/resources/user'
+require 'marqeta/resources/webhook'
 
 module Marqeta
   autoload :Configuration, 'marqeta/configuration'

@@ -9,6 +9,7 @@ module Marqeta
       setting(:default_pagination, 1_000_000)
       setting(:has_collection, false)
       setting(:type)
+      setting(:type_for, {})
 
       class << self
         Base.settings.each do |setting_name|
@@ -20,6 +21,8 @@ module Marqeta
         end
 
         def all
+          raise NoMethodError unless path
+
           response = HTTP.get(endpoint: path, query: { count: config.default_pagination })
 
           if has_collection
@@ -30,10 +33,14 @@ module Marqeta
         end
 
         def find(token)
+          raise NoMethodError unless path
+
           new(HTTP.get(endpoint: path + "/#{token}"))
         end
 
         def create(attributes = {})
+          raise NoMethodError unless path
+
           response = HTTP.post(endpoint: path, params: attributes)
 
           new(response)
@@ -47,13 +54,21 @@ module Marqeta
             config.send(setting_name)
           end
         end
+
+        def set_type_for(field_name, type)
+          config.type_for[field_name] = type
+        end
       end
 
       attr_reader :errors
 
       def update(attributes = {})
-        response = HTTP.put(endpoint: "#{self.class.path}/#{token}", params: to_h.merge(attributes))
+        raise NoMethodError unless self.class.path
 
+        attributes = to_h.merge(attributes)
+        attributes.delete(:token)
+
+        response = HTTP.put(endpoint: "#{self.class.path}/#{token}", params: attributes)
         response.each do |key, value|
           send("#{key}=", value)
         rescue NoMethodError
@@ -64,6 +79,8 @@ module Marqeta
       end
 
       def destroy
+        raise NoMethodError unless self.class.path
+
         HTTP.delete(endpoint: "#{self.class.path}/#{token}")
         true
       end
@@ -76,8 +93,15 @@ module Marqeta
       def to_h
         hash = {}
 
-        self.class.class_type.schema.each_key do |field|
+        self.class.class_type.schema.keys.each do |field|
           hash[field.name] = instance_variable_get("@#{field.name}")
+        end
+
+        # TODO: Refactor
+        self.class.config.type_for.each do |field, value|
+          child_relation = self.class.config.type_for[field]
+          value = instance_variable_get("@#{field}")
+          hash[field] = value&.to_h
         end
 
         hash
@@ -87,11 +111,12 @@ module Marqeta
       def valid?
         clean_errors
         validator = self.class.class_type
+        # TODO: Validate child fields
         validator.schema.each do |field|
           value = send(field.name)
           field[value]
-        rescue => ex
-          add_error(field.name, ex.message)
+        rescue StandardError => e
+          add_error(field.name, e.message)
         end
 
         return false if errors.any?
@@ -111,10 +136,20 @@ module Marqeta
       end
 
       def define_attributes(response)
-        self.class.class_type.schema.each do |field|
+        self.class.class_type.schema.keys.each do |field|
           singleton_class.send(:attr_accessor, field.name)
           value = response[field.name.to_s] || response[field.name] || (field.respond_to?(:value) && field.value)
           instance_variable_set("@#{field.name}", value)
+        end
+
+        # TODO: Refactor
+        self.class.config.type_for.each do |field, value|
+          singleton_class.send(:attr_accessor, field)
+          child_relation = self.class.config.type_for[field]
+          child_relation.class_type.schema.keys.each do |child_field|
+            child_value = response[field.to_s] || response[field]
+            instance_variable_set("@#{field}", value.new(child_value))
+          end
         end
       end
     end
