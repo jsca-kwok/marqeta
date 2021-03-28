@@ -27,4 +27,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '>= 3.10'
   spec.add_development_dependency 'rubocop', '>= 1.12.0'
   spec.add_development_dependency 'simplecov', '~> 0.21.2'
+  spec.add_development_dependency 'rspec-dry-struct', '>= 0.3.0'
+  spec.add_development_dependency 'faker', '>= 2.17.0'
 end

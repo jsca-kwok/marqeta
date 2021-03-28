@@ -54,6 +54,10 @@ GEM
       dry-equalizer (~> 0.2)
       dry-initializer (~> 3.0)
       dry-schema (~> 1.5, >= 1.5.2)
+    faker (2.17.0)
+      i18n (>= 1.6, < 2)
+    i18n (1.8.9)
+      concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     method_source (1.0.0)
     parallel (1.20.1)
@@ -72,6 +76,10 @@ GEM
       rspec-mocks (~> 3.10.0)
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
+    rspec-dry-struct (0.5.0)
+      dry-struct
+      dry-types (>= 0.15.0)
+      rspec
     rspec-expectations (3.10.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.10.0)
@@ -104,10 +112,12 @@ PLATFORMS
 
 DEPENDENCIES
   dotenv (~> 2.7.6)
+  faker (>= 2.17.0)
   marqeta!
   pry (>= 0.14.0)
   rake (~> 12.0)
   rspec (~> 3.0)
+  rspec-dry-struct (>= 0.3.0)
   rubocop (>= 1.12.0)
   simplecov (~> 0.21.2)
 

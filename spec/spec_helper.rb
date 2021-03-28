@@ -3,8 +3,12 @@
 require 'bundler/setup'
 require 'marqeta'
 require 'simplecov'
+require 'faker'
+require 'pry'
 
 Dir[("#{Dir.pwd}/spec/support/**/*.rb")].sort.each { |f| require f }
+
+Types = Dry::Types()
 
 SimpleCov.start
 
