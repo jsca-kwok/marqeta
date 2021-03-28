@@ -6,7 +6,7 @@ require 'marqeta/types'
 module Marqeta
   module Schemas
     class Webhook < BaseSchema
-      params do
+      schema do
         required(:token).value(String.optional)
         required(:name).value(:string)
         required(:active).value(Bool)
