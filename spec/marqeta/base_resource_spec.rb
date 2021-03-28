@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-RSpec.describe Marqeta::Resources::Ping do
+RSpec.describe Marqeta::BaseResource do
   pending 'TODO'
 end

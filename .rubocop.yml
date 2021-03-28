@@ -4,3 +4,5 @@ AllCops:
     - 'spec/**/*.rb'
 Style/Documentation:
   Enabled: false
+Style/HashEachMethods:
+  Enabled: false

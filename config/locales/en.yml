@@ -1,0 +1,6 @@
+en:
+  marqeta:
+    errors:
+      rules:
+        age:
+          invalid: 'must be greater than 18'

@@ -17,16 +17,14 @@ Gem::Specification.new do |spec|
   spec.metadata['changelog_uri'] = 'https://github.com/marcelobarreto/marqeta/tree/main/CHANGELOG.md'
 
   spec.add_dependency 'dry-configurable', '>= 0.12.1'
-  spec.add_dependency 'dry-struct', '>= 1.4.0'
   spec.add_dependency 'dry-types', '>= 1.5.1'
   spec.add_dependency 'dry-validation', '>= 1.6.0'
 
   spec.add_development_dependency 'dotenv', '~> 2.7.6'
+  spec.add_development_dependency 'faker', '>= 2.17.0'
   spec.add_development_dependency 'pry', '>= 0.14.0'
   spec.add_development_dependency 'rake', '>= 13.0'
   spec.add_development_dependency 'rspec', '>= 3.10'
   spec.add_development_dependency 'rubocop', '>= 1.12.0'
   spec.add_development_dependency 'simplecov', '~> 0.21.2'
-  spec.add_development_dependency 'rspec-dry-struct', '>= 0.3.0'
-  spec.add_development_dependency 'faker', '>= 2.17.0'
 end
