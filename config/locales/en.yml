@@ -1,3 +1,210 @@
+# {
+#   "en.marqeta.or": {
+#     "text": "or",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.unexpected_key": {
+#     "text": "is not allowed",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.array?": {
+#     "text": "must be an array",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.empty?": {
+#     "text": "must be empty",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.excludes?": {
+#     "text": "must not include %{value}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.excluded_from?.arg.default": {
+#     "text": "must not be one of: %{list}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.excluded_from?.arg.range": {
+#     "text": "must not be one of: %{list_left} - %{list_right}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.exclusion?": {
+#     "text": "must not be one of: %{list}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.eql?": {
+#     "text": "must be equal to %{left}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.not_eql?": {
+#     "text": "must not be equal to %{left}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.filled?": {
+#     "text": "must be filled",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.format?": {
+#     "text": "is in invalid format",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.number?": {
+#     "text": "must be a number",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.odd?": {
+#     "text": "must be odd",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.even?": {
+#     "text": "must be even",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.gt?": {
+#     "text": "must be greater than %{num}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.gteq?": {
+#     "text": "must be greater than or equal to %{num}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.hash?": {
+#     "text": "must be a hash",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.included_in?.arg.default": {
+#     "text": "must be one of: %{list}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.included_in?.arg.range": {
+#     "text": "must be one of: %{list_left} - %{list_right}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.inclusion?": {
+#     "text": "must be one of: %{list}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.includes?": {
+#     "text": "must include %{value}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.bool?": {
+#     "text": "must be boolean",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.true?": {
+#     "text": "must be true",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.false?": {
+#     "text": "must be false",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.int?": {
+#     "text": "must be an integer",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.float?": {
+#     "text": "must be a float",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.decimal?": {
+#     "text": "must be a decimal",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.date?": {
+#     "text": "must be a date",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.date_time?": {
+#     "text": "must be a date time",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.time?": {
+#     "text": "must be a time",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.key?": {
+#     "text": "is missing",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.attr?": {
+#     "text": "is missing",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.lt?": {
+#     "text": "must be less than %{num}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.lteq?": {
+#     "text": "must be less than or equal to %{num}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.max_size?": {
+#     "text": "size cannot be greater than %{num}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.max_bytesize?": {
+#     "text": "bytesize cannot be greater than %{num}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.min_size?": {
+#     "text": "size cannot be less than %{num}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.min_bytesize?": {
+#     "text": "bytesize cannot be less than %{num}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.nil?": {
+#     "text": "cannot be defined",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.str?": {
+#     "text": "must be a string",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.type?": {
+#     "text": "must be %{type}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.size?.arg.default": {
+#     "text": "size must be %{size}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.size?.arg.range": {
+#     "text": "size must be within %{size_left} - %{size_right}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.size?.value.string.arg.default": {
+#     "text": "length must be %{size}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.size?.value.string.arg.range": {
+#     "text": "length must be within %{size_left} - %{size_right}",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.bytesize?.arg.default": {
+#     "text": "must be %{size} bytes long",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.bytesize?.arg.range": {
+#     "text": "must be within %{size_left} - %{size_right} bytes long",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.uuid_v4?": {
+#     "text": "is not a valid UUID",
+#     "meta": {}
+#   },
+#   "en.marqeta.errors.not.empty?": {
+#     "text": "cannot be empty",
+#     "meta": {}
+#   },
+#   "en.dry_validation.errors.acceptance": {
+#     "text": "must accept %{key}",
+#     "meta": {}
+#   }
+# }
+
 en:
   marqeta:
     errors:
