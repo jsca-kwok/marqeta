@@ -16,9 +16,9 @@ module Marqeta
 
     class WebhookConfig < BaseSchema
       params do
-        required(:url).value(Types::HttpsUrl)
-        required(:basic_auth_username).value(String.constrained(max_size: 50))
-        required(:basic_auth_password).value(Types::SafePassword)
+        required(:url).filled(Types::HttpsUrl)
+        required(:basic_auth_username).filled(String.constrained(max_size: 50))
+        required(:basic_auth_password).filled(Types::SafePassword)
         required(:secret).value(Types::SafePassword.optional)
         required(:custom_header).value(:hash)
       end
