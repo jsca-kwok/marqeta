@@ -62,14 +62,8 @@ module Marqeta
 
     def valid?
       clean_errors
-      validator = self.class.class_schema
-
-      validator.schema.rules.keys.each do |field|
-        value = send(field)
-        field[value]
-      rescue StandardError => e
-        add_error(field, e.message)
-      end
+      validator = self.class.class_schema.schema.call(self.to_h)
+      set_errors(validator.errors.to_hash)
 
       self.class.config.schema_for.each do |field, value|
         unless self.send(field).valid?
@@ -88,6 +82,10 @@ module Marqeta
     def add_error(key, message)
       @errors ||= {}
       @errors[key] = message
+    end
+
+    def set_errors(hash)
+      @errors = hash
     end
 
     def clean_errors
