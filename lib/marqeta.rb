@@ -4,6 +4,7 @@ require 'marqeta/version'
 require 'net/http'
 require 'uri'
 require 'json'
+
 require 'dry-struct'
 require 'dry-types'
 require 'dry-validation'

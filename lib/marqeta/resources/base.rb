@@ -20,6 +20,10 @@ module Marqeta
           config.type
         end
 
+        def update_payload(attributes)
+          yield attributes
+        end
+
         def all
           raise NoMethodError unless path
 
@@ -65,8 +69,10 @@ module Marqeta
       def update(attributes = {})
         raise NoMethodError unless self.class.path
 
-        attributes = to_h.merge(attributes)
-        attributes.delete(:token)
+        return unless valid?
+
+        attributes.merge!(to_hash)
+        # Remove empty params
 
         response = HTTP.put(endpoint: "#{self.class.path}/#{token}", params: attributes)
         response.each do |key, value|
@@ -138,17 +144,17 @@ module Marqeta
       def define_attributes(response)
         self.class.class_type.schema.keys.each do |field|
           singleton_class.send(:attr_accessor, field.name)
-          value = response[field.name.to_s] || response[field.name] || (field.respond_to?(:value) && field.value)
+          value = response[field.name.to_s] || response[field.name]
           instance_variable_set("@#{field.name}", value)
         end
 
         # TODO: Refactor
-        self.class.config.type_for.each do |field, value|
+        self.class.config.type_for.each do |field, child_class|
           singleton_class.send(:attr_accessor, field)
           child_relation = self.class.config.type_for[field]
           child_relation.class_type.schema.keys.each do |child_field|
             child_value = response[field.to_s] || response[field]
-            instance_variable_set("@#{field}", value.new(child_value))
+            instance_variable_set("@#{field}", child_class.new(child_value))
           end
         end
       end

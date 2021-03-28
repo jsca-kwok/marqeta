@@ -17,7 +17,7 @@ module Marqeta
 
       def handle_response(response)
         case response.code.to_i
-        when 200, 201
+        when 200, 201, 206
           JSON.parse(response.body)
         when 400
           raise BadRequestError.new(response.body)
